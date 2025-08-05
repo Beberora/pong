@@ -3,15 +3,16 @@ def printGreetings():
     roundsNumber = int(input('Введите количество раундов:'))
     return roundsNumber
 
+width = 80  # ширина поля
+height = 25  # высота поля
+paddleHeight = 3  # высота ракетки
+left_paddle_x = 1  # x-позиция левой ракетки (фиксирована у левой стенки)
+right_paddle_x = width - 2  # x-позиция правой ракетки (фиксирована у правой стенки)
+
 def printField(left_paddle_y, right_paddle_y, ball_x, ball_y):
     # Отрисовка поля с фиксированными параметрами
     field = []
     
-    width = 80  # ширина поля
-    height = 24  # высота поля
-    paddleHeight = 3  # высота ракетки
-    left_paddle_x = 1  # x-позиция левой ракетки (фиксирована у левой стенки)
-    right_paddle_x = width - 2  # x-позиция правой ракетки (фиксирована у правой стенки)
      
     top_border = '+' + '-' * (width - 2) + '+'
     field.append(top_border)
@@ -46,9 +47,28 @@ firstUserPoints = 0
 secondUserPoints = 0
 roundsNumber = printGreetings()
 
-left_paddle_y = height // 2
-right_paddle_y = height // 2
+left_paddle_y = height // 2 - 1
+right_paddle_y = height // 2 - 1
 ball_x = width // 2
 ball_y = height // 2
-    
+   
 while roundsNumber != firstUserPoints + secondUserPoints:
+    printField(left_paddle_y, right_paddle_y, ball_x, ball_y)
+    userTurn = input('ваш ход')
+    if userTurn != 'z' and userTurn != 'a' and userTurn != 'm' and userTurn != 'k':
+        print("Неккоректный ввод")
+    
+    elif left_paddle_y != 21 and userTurn == 'z':    
+        left_paddle_y += 1
+            
+    elif left_paddle_y != 1 and userTurn == 'a':
+        left_paddle_y -= 1
+            
+    elif right_paddle_y != 21 and userTurn == 'm':
+        right_paddle_y += 1
+        
+    elif right_paddle_y != 1 and userTurn == 'k':
+        right_paddle_y -= 1
+
+        
+    
