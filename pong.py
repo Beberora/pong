@@ -1,3 +1,4 @@
+import random
 def printGreetings():
     print("Добро пожаловать в Pong")
     roundsNumber = int(input('Введите количество раундов:'))
@@ -47,10 +48,14 @@ firstUserPoints = 0
 secondUserPoints = 0
 roundsNumber = printGreetings()
 
+
 left_paddle_y = height // 2 - 1
 right_paddle_y = height // 2 - 1
 ball_x = width // 2
 ball_y = height // 2
+
+isFirstUserTurn = random.randint(0, 1)
+
    
 while roundsNumber != firstUserPoints + secondUserPoints:
     printField(left_paddle_y, right_paddle_y, ball_x, ball_y)
@@ -70,5 +75,21 @@ while roundsNumber != firstUserPoints + secondUserPoints:
     elif right_paddle_y != 1 and userTurn == 'k':
         right_paddle_y -= 1
 
+    if isFirstUserTurn == 1:
+        ball_x -= 1
+    else:
+        ball_x += 1
+    print(ball_x, left_paddle_x)
+
+    if abs(left_paddle_x - ball_x) == 1 and ball_y >= left_paddle_y and ball_y <= left_paddle_y+2:
+        isFirstUserTutn = 0
+
+    if abs(right_paddle_x - ball_x) == 1 and ball_y >= right_paddle_y-1 and ball_y <= right_paddle_y+1:
+        isFirstUserTutn = 1
+
+    
+
+        
+        
         
     
