@@ -1,4 +1,14 @@
 import random
+
+
+def ballDirection(paddle_y, ball_y):
+    if paddle_y == ball_y:
+        return 1
+    elif paddle_y-1 == ball_y:
+        return 2
+    elif paddle_y-2 == ball_y:
+        return 3
+    
 def printGreetings():
     print("Добро пожаловать в Pong")
     roundsNumber = int(input('Введите количество раундов:'))
@@ -81,11 +91,13 @@ while roundsNumber != firstUserPoints + secondUserPoints:
         ball_x += 1
     print(ball_x, left_paddle_x)
 
-    if abs(left_paddle_x - ball_x) == 1 and ball_y >= left_paddle_y and ball_y <= left_paddle_y+2:
-        isFirstUserTutn = 0
+    if abs(left_paddle_x - ball_x) == 1 and ball_y >= left_paddle_y and ball_y <= left_paddle_y+2:  
+        isFirstUserTurn = 0
+        print(isFirstUserTurn)
 
-    if abs(right_paddle_x - ball_x) == 1 and ball_y >= right_paddle_y-1 and ball_y <= right_paddle_y+1:
-        isFirstUserTutn = 1
+    elif abs(right_paddle_x - ball_x) == 1 and ball_y >= right_paddle_y-1 and ball_y <= right_paddle_y+1:
+        isFirstUserTurn = 1
+        print(isFirstUserTurn)
 
     
 
