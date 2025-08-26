@@ -4,9 +4,9 @@ import random
 def ballDirection(paddle_y, ball_y):
     if paddle_y == ball_y:
         return 1
-    elif paddle_y-1 == ball_y:
+    elif abs(paddle_y+1) == ball_y:
         return 2
-    elif paddle_y-2 == ball_y:
+    elif abs(paddle_y+2) == ball_y:
         return 3
     
 def printGreetings():
@@ -58,7 +58,7 @@ firstUserPoints = 0
 secondUserPoints = 0
 roundsNumber = printGreetings()
 
-
+ballDirectionPoint = -1
 left_paddle_y = height // 2 - 1
 right_paddle_y = height // 2 - 1
 ball_x = width // 2
@@ -85,23 +85,33 @@ while roundsNumber != firstUserPoints + secondUserPoints:
     elif right_paddle_y != 1 and userTurn == 'k':
         right_paddle_y -= 1
 
+    if ball_y == height-1:
+        ballDirectionPoint = 1
+    elif ball_y == 1:
+        ballDirectionPoint = 3
+        
+    if abs(left_paddle_x - ball_x) == 1 and ball_y >= left_paddle_y and ball_y <= left_paddle_y+2:  
+        ballDirectionPoint = ballDirection(left_paddle_y, ball_y)
+        isFirstUserTurn = 0     
+
+    elif abs(right_paddle_x - ball_x) == 1 and ball_y >= right_paddle_y and ball_y <= right_paddle_y+2:
+        ballDirectionPoint = ballDirection(right_paddle_y, ball_y)
+        isFirstUserTurn = 1
+    
     if isFirstUserTurn == 1:
         ball_x -= 1
     else:
         ball_x += 1
-    print(ball_x, left_paddle_x)
-
-    if abs(left_paddle_x - ball_x) == 1 and ball_y >= left_paddle_y and ball_y <= left_paddle_y+2:  
-        isFirstUserTurn = 0
-        print(isFirstUserTurn)
-
-    elif abs(right_paddle_x - ball_x) == 1 and ball_y >= right_paddle_y-1 and ball_y <= right_paddle_y+1:
-        isFirstUserTurn = 1
-        print(isFirstUserTurn)
-
-    
-
         
+    if ballDirectionPoint == 1:
+        ball_y -= 1
+    elif ballDirectionPoint == 3:
+        ball_y += 1
+
+    if left_paddle_x == ball_x:
+        secondUserPoints += 1
         
+    if right_paddle_x == ball_x:
+        firstUserPoints += 1
         
     
