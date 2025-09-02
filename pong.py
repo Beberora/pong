@@ -1,6 +1,11 @@
 import random
 
-
+def ballPaddleReset(ball_x, ball_y, right_paddle_y, left_paddle_y):
+     ball_x = width//2
+     ball_y = height//2
+     left_paddle_y = height//2
+     right_paddle_y = height//2
+        
 def ballDirection(paddle_y, ball_y):
     if paddle_y == ball_y:
         return 1
@@ -11,7 +16,7 @@ def ballDirection(paddle_y, ball_y):
     
 def printGreetings():
     print("Добро пожаловать в Pong")
-    roundsNumber = int(input('Введите количество раундов:'))
+    roundsNumber = int(input('Введите количество раундов: '))
     return roundsNumber
 
 width = 80  # ширина поля
@@ -20,37 +25,37 @@ paddleHeight = 3  # высота ракетки
 left_paddle_x = 1  # x-позиция левой ракетки (фиксирована у левой стенки)
 right_paddle_x = width - 2  # x-позиция правой ракетки (фиксирована у правой стенки)
 
-def printField(left_paddle_y, right_paddle_y, ball_x, ball_y):
-    # Отрисовка поля с фиксированными параметрами
+def printField(leftPaddleY, rightPaddleY, leftPaddleX, rightPaddleX, ballX, ballY, firstUserPoints,secondUserPoints):
     field = []
-    
-     
-    top_border = '+' + '-' * (width - 2) + '+'
-    field.append(top_border)
 
-    for y in range(1, height - 1):
-        row_chars = []
+    topBorder = '+' + '-' * (width - 2) + '+'
+    field.append(topBorder)
+
+    for y in range(1, height -1):
+        rowChars = []
         for x in range(width):
             if x == 0:
-                row_chars.append('|')
-            elif x == width - 1:
-                row_chars.append('|')
-            elif x == left_paddle_x and left_paddle_y <= y < left_paddle_y + paddleHeight:
-                row_chars.append('|')
-            elif x == right_paddle_x and right_paddle_y <= y < right_paddle_y + paddleHeight:
-                row_chars.append('|')
-            elif x == ball_x and y == ball_y:
-                row_chars.append('o')
+                rowChars.append('|')
+            elif x == width -1:
+                rowChars.append('|')
+            elif x == leftPaddleX and leftPaddleY <= y < leftPaddleY + paddleHeight:
+                rowChars.append('|')
+            elif x == rightPaddleX and rightPaddleY <= y < rightPaddleY + paddleHeight:
+                rowChars.append('|')
+            elif x == ballX and y == ballY:
+                rowChars.append('o')
             else:
-                row_chars.append(' ')
-        field.append(''.join(row_chars))
+                rowChars.append(' ')
+        field.append(''.join(rowChars))
 
-    bottom_border = '+' + '-' * (width - 2) + '+'
-    field.append(bottom_border)
+    bottomBorder = '+' + '-' * (width - 2) + '+'
+    field.append(bottomBorder)
+    usersScore = ' ' * (width//2-3) + str(firstUserPoints) + ' : ' + str(secondUserPoints)
+    field.append(usersScore)
 
-    # Печать поля
     for line in field:
         print(line)
+
 
 
 
@@ -68,8 +73,8 @@ isFirstUserTurn = random.randint(0, 1)
 
    
 while roundsNumber != firstUserPoints + secondUserPoints:
-    printField(left_paddle_y, right_paddle_y, ball_x, ball_y)
-    userTurn = input('ваш ход')
+    printField(left_paddle_y, right_paddle_y, left_paddle_x, right_paddle_x, ball_x, ball_y, firstUserPoints, secondUserPoints)
+    userTurn = input('Ваш ход: ')
     if userTurn != 'z' and userTurn != 'a' and userTurn != 'm' and userTurn != 'k':
         print("Неккоректный ввод")
     
@@ -110,8 +115,16 @@ while roundsNumber != firstUserPoints + secondUserPoints:
 
     if left_paddle_x == ball_x:
         secondUserPoints += 1
+        ballPaddleReset(ball_x, ball_y, right_paddle_y, left_paddle_y)
         
     if right_paddle_x == ball_x:
         firstUserPoints += 1
-        
+        ballPaddleReset(ball_x, ball_y, right_paddle_y, left_paddle_y)
+
+if secondUserPoints > firstUserPoints:
+    print("Победил второй игрок со счетом", firstUserPoints, ":", secondUserPoints)
+elif secondUserPoints < firstUserPoints:
+    print("Победил первый игрок со счетом", firstUserPoints, ":", secondUserPoints)
+else:
+    print("Победила дружба со счетом", firstUserPoints, ":", secondUserPoints)
     
